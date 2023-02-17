@@ -1,16 +1,25 @@
 package SpringTemplate.demo.order;
 
+import SpringTemplate.demo.AppConfig;
 import SpringTemplate.demo.member.Grade;
 import SpringTemplate.demo.member.Member;
 import SpringTemplate.demo.member.MemberService;
 import SpringTemplate.demo.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class OrderServiceTest {
 
-    MemberService memberService = new MemberServiceImpl();
-    OrderService orderService = new OrderServiceImpl();
+    MemberService memberService;
+    OrderService orderService;
+
+    @BeforeEach //각 테스트마다 테스트 실행 전에 BeforeEach 먼저 실행
+    public void beforeEach() {
+        AppConfig appconfig = new AppConfig();
+        memberService = appconfig.memberService();
+        orderService = appconfig.orderService();
+    }
 
     @Test
     void createOrder() {

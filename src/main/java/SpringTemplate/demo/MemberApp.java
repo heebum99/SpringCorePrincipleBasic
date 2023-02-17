@@ -6,8 +6,10 @@ import SpringTemplate.demo.member.MemberService;
 import SpringTemplate.demo.member.MemberServiceImpl;
 
 public class MemberApp {
-    public static void main(String[] args) {
-        MemberService memberService = new MemberServiceImpl();
+    public static void main(String[] args) { //Appconfig를 이용해 실행
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        //MemberService memberService = new MemberServiceImpl();
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
