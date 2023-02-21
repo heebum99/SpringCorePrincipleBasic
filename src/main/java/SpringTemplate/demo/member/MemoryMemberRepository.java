@@ -1,8 +1,11 @@
 package SpringTemplate.demo.member;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component //컴포넌트 스캔 방식을 이용해 빈에 자동 등록하기 위해 애노테이션 사용
 public class MemoryMemberRepository implements MemberRepository {
     //일반 Hashmap을 사용시 동시성 문제가 있을수 있기 때문에 ConcurrentHashmap을 사용하는 것이 좋음.
     //ConcurrentHashmap는 읽기 작업보다는 쓰기 작업의 성능이 중요한 상황에서 쓰면 적합(멀티 쓰레드에서 동시에 쓰는 작업 가능)

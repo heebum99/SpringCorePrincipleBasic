@@ -6,7 +6,9 @@ import SpringTemplate.demo.discount.RateDiscountPolicy;
 import SpringTemplate.demo.member.Member;
 import SpringTemplate.demo.member.MemberRepository;
 import SpringTemplate.demo.member.MemoryMemberRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
