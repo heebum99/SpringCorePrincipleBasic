@@ -1,5 +1,8 @@
 package SpringTemplate.demo;
 
+import SpringTemplate.demo.member.MemberRepository;
+import SpringTemplate.demo.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -14,5 +17,12 @@ import org.springframework.context.annotation.FilterType;
 
 )
 public class AutoAppConfig {
+
+    //자동으로 등록된 빈과 충돌나게 수동으로 같은 이름의 빈을 등록
+    //수동, 자동으로 등록된 빈의 이름이 같은 경우 오류발생x, 수동 등록된 빈이 오버라이딩되서 우선권을 갖는다.
+//    @Bean(name = "memoryMemberRepository")
+//    MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 
 }
