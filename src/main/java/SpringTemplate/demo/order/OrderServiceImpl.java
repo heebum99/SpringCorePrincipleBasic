@@ -20,9 +20,6 @@ public class OrderServiceImpl implements OrderService {
 //        this.memberRepository = memberRepository;
 //    } => 의존관계 수정자(setter) 주입 방식
 
-
-
-
     private final MemberRepository memberRepository;
     //할인 정책을 바꿈으로 코드를 변경하는것 => OCP위반.
 
@@ -38,7 +35,6 @@ public class OrderServiceImpl implements OrderService {
      **/
     private final DiscountPolicy discountPolicy; //인터페이스에만 의존 => DIP 적합, 현재는 NullPointException 발생
     //DiscountPolicy에 들어갈 구현체를 생성자를 통해 선택
-
 
     @Autowired //생성자가 한개인 경우에는 생략가능하다. => 의존관계 생성자 주입 방식
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
