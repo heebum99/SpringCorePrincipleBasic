@@ -20,8 +20,17 @@ public class OrderServiceImpl implements OrderService {
 //        this.memberRepository = memberRepository;
 //    } => 의존관계 수정자(setter) 주입 방식
 
+
+
+
     private final MemberRepository memberRepository;
     //할인 정책을 바꿈으로 코드를 변경하는것 => OCP위반.
+
+//    @Autowired
+//    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+//        this.discountPolicy = discountPolicy;
+//    }
+
     /**
      * private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
      * => private final DiscountPolicy로 바뀐다는 것은

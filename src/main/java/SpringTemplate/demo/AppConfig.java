@@ -38,6 +38,7 @@ public class AppConfig { //객체 생성과 연결을 담당
     public OrderService orderService() {
         System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
+//        return null;
     }
 
     @Bean
