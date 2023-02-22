@@ -7,6 +7,7 @@ import SpringTemplate.demo.member.Member;
 import SpringTemplate.demo.member.MemberRepository;
 import SpringTemplate.demo.member.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -41,6 +42,20 @@ public class OrderServiceImpl implements OrderService {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
+
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+//        @Qualifier로 추가 구분자를 이용한 문제 해결
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
+
+//    @Autowired 
+//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy rateDiscountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = rateDiscountPolicy; //discountPolicy는 fix, rate일때로 같은 타입이 존재하므로 존재하는 특정 이름으로 설정
+//        //@Autowired가 같은 타입이 존재할때 필드명, 파라미터명으로 빈 이름과 추가 매칭
+//    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
