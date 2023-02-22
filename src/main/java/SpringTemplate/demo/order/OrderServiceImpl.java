@@ -6,10 +6,19 @@ import SpringTemplate.demo.discount.RateDiscountPolicy;
 import SpringTemplate.demo.member.Member;
 import SpringTemplate.demo.member.MemberRepository;
 import SpringTemplate.demo.member.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServiceImpl implements OrderService {
+
+    //@Autowired private final MemberRepository memberRepository; => 의존관계 필드 주입 방식
+    //필드로 의존관계를 주입하려면 결국 private 필드기 때문에 setter가 필요하다.
+
+//    @Autowired
+//    public void setMemberRepository(MemberRepository memberRepository){
+//        this.memberRepository = memberRepository;
+//    } => 의존관계 수정자(setter) 주입 방식
 
     private final MemberRepository memberRepository;
     //할인 정책을 바꿈으로 코드를 변경하는것 => OCP위반.
@@ -22,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     //DiscountPolicy에 들어갈 구현체를 생성자를 통해 선택
 
 
+    @Autowired //생성자가 한개인 경우에는 생략가능하다. => 의존관계 생성자 주입 방식
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
