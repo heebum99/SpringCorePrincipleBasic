@@ -3,6 +3,9 @@ package SpringTemplate.demo.lifecycle;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 //public class NetworkClient implements InitializingBean, DisposableBean {
 public class NetworkClient {
     //예시로 로그에 출력만 하는 형식
@@ -44,6 +47,7 @@ public class NetworkClient {
 //        disconnect();
 //    }
 
+    @PostConstruct
     public void init() {
         System.out.println("NetworkClient.init");
         ;
@@ -51,6 +55,7 @@ public class NetworkClient {
         call("초기화 연결 메시지");
     }
 
+    @PreDestroy
     public void close() {
         System.out.println("NetworkClient.close");
         disconnect();
