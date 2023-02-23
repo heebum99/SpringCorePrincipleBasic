@@ -3,7 +3,8 @@ package SpringTemplate.demo.lifecycle;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
-public class NetworkClient implements InitializingBean, DisposableBean {
+//public class NetworkClient implements InitializingBean, DisposableBean {
+public class NetworkClient {
     //예시로 로그에 출력만 하는 형식
     private String url;
 
@@ -30,16 +31,28 @@ public class NetworkClient implements InitializingBean, DisposableBean {
         System.out.println("close " + url);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception { //의존관계 주입이 끝나면 호출하는 메소드
-        System.out.println("NetworkClient.afterPropertiesSet");
+//    @Override
+//    public void afterPropertiesSet() throws Exception { //의존관계 주입이 끝나면 호출하는 메소드
+//        System.out.println("NetworkClient.afterPropertiesSet");
+//        connect();
+//        call("초기화 연결 메시지");
+//    }
+
+//    @Override
+//    public void destroy() throws Exception { //서비스 종료 시점에 호출
+//        System.out.println("NetworkClient.destroy");
+//        disconnect();
+//    }
+
+    public void init() {
+        System.out.println("NetworkClient.init");
+        ;
         connect();
         call("초기화 연결 메시지");
     }
 
-    @Override
-    public void destroy() throws Exception { //서비스 종료 시점에 호출
-        System.out.println("NetworkClient.destroy");
+    public void close() {
+        System.out.println("NetworkClient.close");
         disconnect();
     }
 }
