@@ -3,12 +3,14 @@ package SpringTemplate.demo.scope;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +39,8 @@ public class SingletonWithPrototypeTest1 {
 
         ClientBean clientBean2 = ac.getBean(ClientBean.class);
         int count2 = clientBean2.logic();
-        assertThat(count2).isEqualTo(2);
+//        assertThat(count2).isEqualTo(2);
+        assertThat(count2).isEqualTo(1);
         //이 경우 2번의 prototypeBean을 호출했지만 이미 prototypeBean은 ClientBean의 생성 시점에 주입이 된 상태이므로
         //prototypeBean을 사용할때마다가 아닌 주입 시점에만 새로 생성이 된다.
         //몇번을 호출을 해도 새로운 prototypeBean이 아닌 같은 prototypeBean이 호출된다.
@@ -46,7 +49,13 @@ public class SingletonWithPrototypeTest1 {
     @Scope("singleton")
 //    @RequiredArgsConstructor => final 필드를 포함한 생성자 자동 생성
     static class ClientBean {
-        private final PrototypeBean prototypeBean; //ClientBean 생성 시점에 주입.
+//        private final PrototypeBean prototypeBean; //ClientBean 생성 시점에 주입.
+
+//        @Autowired //Provider를 이용해 프로토타입과 싱글톤 빈 함께 사용하기.
+//        private ObjectProvider<PrototypeBean> prototypeBeanProvider; //부모인 ObjectFactory도 사용가능
+
+        @Autowired //javax inject Provider 사용
+        private Provider<PrototypeBean> prototypeBeanProvider;
 
         /*  @Autowired
             ApplicationContext ac;
@@ -59,16 +68,28 @@ public class SingletonWithPrototypeTest1 {
         }
         이런 식으로 프로토타입 빈을 사용할때마다 생성하게 만들수는 있지만 좋은 코드는 아님.
         */
-        @Autowired //생략가능
-        public ClientBean(PrototypeBean prototypeBean) { //의존관계 주입, 이때 프로토타입 빈을 생성해서 줌.
-            this.prototypeBean = prototypeBean;
-        }
+//        @Autowired //생략가능
+//        public ClientBean(PrototypeBean prototypeBean) { //의존관계 주입, 이때 프로토타입 빈을 생성해서 줌.
+//            this.prototypeBean = prototypeBean;
+//        }
+
+//        public int logic() {
+//            //prototypeBeanProvider.getObject(); 할때마다 항상 새로운 프로토타입 빈이 생성됨.
+//            PrototypeBean prototypeBean = prototypeBeanProvider.getObject(); //Provider로 프로토타입 빈만 찾아낼수 있다.
+//            prototypeBean.addCount();
+//            int count = prototypeBean.getCount();
+//            return count;
+//        }
 
         public int logic() {
+            //javax inject Provider 사용
+            PrototypeBean prototypeBean = prototypeBeanProvider.get(); //Provider.get()을 통해 항상 새로운 프로토타입 빈이 생성
             prototypeBean.addCount();
             int count = prototypeBean.getCount();
             return count;
         }
+
+
     }
 
     @Scope("prototype")
